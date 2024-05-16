@@ -1,1 +1,44 @@
+#include<stdio.h>
+#include<math.h>
+
+double fx(double x) {
+    return pow(x, 4)-4;
+}
+
+double secant(double x0, double x1, double tolerance, int max_iterations) {
+    double f0 = fx(x0);
+    double f1 = fx(x1);
+    double x2, f2;
+
+    for (int i = 0; i < max_iterations; ++i) {
+        x2 = x1 - f1 * (x1 - x0) / (f1 - f0);
+
+        if (fabs(x2 - x1) < tolerance * fabs(x2)) {
+            return x2;
+        }
+
+        x0 = x1;
+        f0 = f1;
+        x1 = x2;
+        f1 = fx(x1);
+    }
+
+    return NAN;
+}
+
+int main() {
+    double x0 = 1, x1 = 2;
+    double tolerance = 0.0001;
+    int max_iterations = 100;
+
+    double root = secant(x0, x1, tolerance, max_iterations);
+
+    if (!isnan(root)) {
+        printf("Root is %.6f\n", root);
+    } else {
+        printf("Root not found within maximum iterations.\n");
+    }
+
+    return 0;
+}
 
