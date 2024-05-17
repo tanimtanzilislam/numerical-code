@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <math.h>
+
+double g(double x) {
+    return x=((2/x)+x)/2; // Define the function g(x) for fixed-point iteration
+}
+
+int main() {
+    double x0 = 1.5;
+    double x1;
+    int i = 1;
+    printf("Iteration no:         x\n");
+    while (1) {
+        x1 = g(x0); // Apply fixed-point iteration: x_{n+1} = g(x_n)
+
+        // Check for convergence
+        if (fabs(x1 - x0) / x1 < 0.0001) {
+            break;
+        }
+
+        printf("%d              %.6f\n", i, x1);
+        i++;
+        x0 = x1;
+    }
+
+    printf("Root is  %.6f", x1);
+    return 0;
+}
